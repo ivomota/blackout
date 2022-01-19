@@ -190,11 +190,21 @@ export default ({
     }
   };
 
-  const handleSetShippingAddress = async (address: { id: number }) => {
-    setCheckoutSelectedShipping(address.id);
-    await updateCheckout(checkoutId, {
+  const handleSetShippingAddress = async (
+    address: { id: number },
+    isSameAsBilling: boolean = false,
+  ) => {
+    const data = isSameAsBilling ? 
+    {
       shippingAddress: address,
-    });
+      billingAddress: address
+    } :
+    {
+      shippingAddress: address,
+    }
+    
+    setCheckoutSelectedShipping(address.id);
+    await updateCheckout(checkoutId, data);
   };
 
   const handleSetBillingAddress = async (address: { id: number }) => {
